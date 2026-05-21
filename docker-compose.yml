@@ -1,0 +1,73 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mini-crm
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    volumes:
+      - .:/var/www/html:cached
+      - vendor-data:/var/www/html/vendor
+      - bootstrap-cache:/var/www/html/bootstrap/cache
+    ports:
+      - "8000:8000"
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      TELESCOPE_ENABLED: "false"
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: mini_crm
+      DB_USERNAME: crm_user
+      DB_PASSWORD: crm_password
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - crm-network
+
+  db:
+    image: mysql:8.0
+    container_name: mini-crm-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mini_crm
+      MYSQL_USER: crm_user
+      MYSQL_PASSWORD: crm_password
+    ports:
+      - "3307:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    networks:
+      - crm-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: mini-crm-phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      UPLOAD_LIMIT: 64M
+    ports:
+      - "8080:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - crm-network
+
+networks:
+  crm-network:
+    driver: bridge
+
+volumes:
+  db-data:
+  vendor-data:
+  bootstrap-cache:
