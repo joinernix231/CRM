@@ -9,22 +9,31 @@ class Client extends Model
 {
     use HasFactory;
 
-
     protected $fillable = [
         'user_id',
         'name',
         'email',
         'phone',
         'company',
+        'status',
     ];
 
-    public $rules = [
-        'user_id' => 'required|exists:users,id',
+    public static array $rules = [
+        'user_id' => 'required|integer|exists:users,id',
         'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:clients,email',
+        'email' => 'required|email',
         'phone' => 'required|string|max:255',
         'company' => 'required|string|max:255',
-        'status'  => 'required|in:active,inactive,prospect',
+    ];
+
+    public static array $customAttributes = [
+        'user_id' => 'usuario',
+        'name' => 'nombre',
+        'email' => 'email',
+        'phone' => 'teléfono',
+        'company' => 'empresa',
+        'status' => 'estado',
+        'id' => 'cliente',
     ];
 
     public function user()
