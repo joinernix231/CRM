@@ -1,0 +1,36 @@
+:root {
+    --crm-navy: #1e3a5f;
+    --crm-blue: #2563eb;
+    --crm-blue-light: #3b82f6;
+    --crm-accent: #60a5fa;
+
+    --crm-bg: #f0f4f8;
+    --crm-surface: #ffffff;
+    --crm-border: #e2e8f0;
+    --crm-border-subtle: #f1f5f9;
+
+    --crm-text: #1e293b;
+    --crm-text-muted: #64748b;
+    --crm-text-subtle: #94a3b8;
+
+    --crm-success: #15803d;
+    --crm-success-bg: rgb(34 197 94 / 15%);
+    --crm-danger: #b91c1c;
+    --crm-danger-bg: rgb(239 68 68 / 12%);
+    --crm-warning: #a16207;
+    --crm-warning-bg: rgb(234 179 8 / 18%);
+
+    --crm-shadow: 0 4px 20px rgb(30 58 95 / 8%);
+    --crm-shadow-hover: 0 8px 24px rgb(30 58 95 / 12%);
+    --crm-shadow-soft: 0 2px 8px rgb(30 58 95 / 6%);
+
+    --crm-radius: 12px;
+    --crm-radius-sm: 10px;
+    --crm-radius-pill: 999px;
+
+    --crm-transition: 0.2s ease;
+    --crm-sidebar-width: 240px;
+
+    --crm-gradient-primary: linear-gradient(135deg, var(--crm-blue), var(--crm-blue-light));
+    --crm-gradient-danger: linear-gradient(135deg, #dc2626, #ef4444);
+}
