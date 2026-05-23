@@ -9,15 +9,10 @@ class AuthTokenResource extends JsonResource
 {
     public static $wrap = null;
 
-    /**
-     * @param  Request  $request
-     * @return array<string, mixed>
-     */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'access_token' => $this->resource['access_token'],
-            'token_type' => $this->resource['token_type'],
             'user' => (new UserResource($this->resource['user']))->resolve(),
         ];
     }
@@ -26,7 +21,7 @@ class AuthTokenResource extends JsonResource
      * @param  Request  $request
      * @return array<string, mixed>
      */
-    public function with($request)
+    public function with($request): array
     {
         return [
             'success' => true,

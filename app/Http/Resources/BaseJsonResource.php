@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\MissingValue;
 use Illuminate\Pagination\AbstractPaginator;
@@ -12,9 +13,9 @@ class BaseJsonResource extends JsonResource
 
     /**
      * @param  mixed  $resource
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection|array<string, mixed>|null
+     * @return AnonymousResourceCollection|array<string, mixed>|null
      */
-    public static function collection($resource)
+    public static function collection($resource): array|AnonymousResourceCollection|null
     {
         if ($resource instanceof MissingValue) {
             return null;
@@ -65,7 +66,7 @@ class BaseJsonResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array<string, mixed>
      */
-    public function with($request)
+    public function with($request): array
     {
         return [
             'success' => true,
