@@ -16,3 +16,10 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Nested paths that must not be versioned
+/database/database/
+/database/seeders/seeders/
+/database/factories/factories/
+/database/seeders/Concerns/Concerns/
+/public/vendor/
