@@ -29,6 +29,8 @@ const {
     cancelContactForm,
     saveContact,
     removeContact,
+    downloadPdf,
+    pdfLoading,
 } = useClientDetail();
 </script>
 
@@ -44,11 +46,13 @@ const {
             <ClientFormPanel
                 :form="form"
                 :saving="saving"
+                :pdf-loading="pdfLoading"
                 :is-create="isCreate"
                 :status-options="statusOptions"
                 :field-errors="fieldErrors"
                 @save="saveClient"
                 @delete="removeClient"
+                @download-pdf="downloadPdf"
             />
 
             <ContactsPanel

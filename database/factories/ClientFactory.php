@@ -19,7 +19,7 @@ class ClientFactory extends Factory
             'user_id' => User::factory(),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'phone' => fake()->numerify('3########'),
+            'phone' => fake()->numerify('3#########'),
             'company' => fake()->company(),
             'status' => fake()->randomElement(['active', 'inactive', 'prospect']),
         ];

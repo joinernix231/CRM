@@ -22,15 +22,28 @@ defineProps({
         type: Object,
         default: () => ({}),
     },
+    pdfLoading: {
+        type: Boolean,
+        default: false,
+    },
 });
 
-const emit = defineEmits(['save', 'delete']);
+const emit = defineEmits(['save', 'delete', 'download-pdf']);
 </script>
 
 <template>
     <section class="client-panel">
         <header class="client-panel__head">
             <h2>{{ isCreate ? 'Datos del cliente' : 'Información del cliente' }}</h2>
+            <button
+                v-if="!isCreate"
+                type="button"
+                class="crm-btn-secondary"
+                :disabled="saving || pdfLoading"
+                @click="emit('download-pdf')"
+            >
+                {{ pdfLoading ? 'Generando PDF…' : 'Descargar PDF' }}
+            </button>
         </header>
 
         <form class="client-form" @submit.prevent="emit('save')">
@@ -103,6 +116,11 @@ const emit = defineEmits(['save', 'delete']);
 }
 
 .client-panel__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
     padding: 1.25rem 1.35rem;
     border-bottom: 1px solid var(--crm-border);
 }
@@ -112,6 +130,29 @@ const emit = defineEmits(['save', 'delete']);
     font-size: 1.125rem;
     font-weight: 700;
     color: var(--crm-navy);
+}
+
+.crm-btn-secondary {
+    border: 1px solid var(--crm-border);
+    border-radius: var(--crm-radius-sm);
+    padding: 0.55rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: inherit;
+    color: var(--crm-navy);
+    background: var(--crm-surface);
+    cursor: pointer;
+    transition: border-color var(--crm-transition), color var(--crm-transition);
+}
+
+.crm-btn-secondary:hover:not(:disabled) {
+    border-color: var(--crm-blue);
+    color: var(--crm-blue);
+}
+
+.crm-btn-secondary:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
 }
 
 .client-form {

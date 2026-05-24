@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ClientController;
+use App\Http\Controllers\Api\ClientPdfController;
 use App\Http\Controllers\Api\ContactController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,7 @@ Route::middleware(['api.session', 'api.token'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     // Clients
+    Route::get('clients/{client}/pdf', [ClientPdfController::class, 'show'])->whereNumber('client');
     Route::apiResource('clients', ClientController::class);
     // Contacts
     Route::apiResource('clients.contacts', ContactController::class);

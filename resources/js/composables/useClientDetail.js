@@ -21,6 +21,7 @@ export function useClientDetail() {
         contactError,
         contactFieldErrors,
         isCreate,
+        pdfLoading,
     } = storeToRefs(store);
 
     onMounted(() => {
@@ -41,10 +42,12 @@ export function useClientDetail() {
         contactError,
         contactFieldErrors,
         isCreate,
+        pdfLoading,
         pageTitle: store.pageTitle,
         statusOptions: clientsStore.statusOptions,
         saveClient: store.saveClient,
         removeClient: store.removeClient,
+        downloadPdf: store.downloadPdf,
         openNewContactForm: store.openNewContactForm,
         openEditContactForm: store.openEditContactForm,
         cancelContactForm: store.cancelContactForm,

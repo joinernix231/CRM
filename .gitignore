@@ -17,6 +17,9 @@ yarn-error.log
 /.idea
 /.vscode
 
+# Legacy local folder (old project layout)
+/mini-crm/
+
 # Nested paths that must not be versioned
 /database/database/
 /database/seeders/seeders/

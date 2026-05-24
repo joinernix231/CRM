@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import {
     createClient,
     deleteClient,
+    downloadClientPdf,
     fetchClient,
     updateClient,
 } from '../api/clients.api';
@@ -46,6 +47,7 @@ export const useClientDetailStore = defineStore('clientDetail', {
         fieldErrors: {},
         contactError: null,
         contactFieldErrors: {},
+        pdfLoading: false,
     }),
 
     getters: {
@@ -202,6 +204,23 @@ export const useClientDetailStore = defineStore('clientDetail', {
                 window.location.href = WEB_ROUTES.clients;
             } catch (err) {
                 window.alert(getHttpErrorMessage(err, 'No se pudo eliminar el cliente'));
+            }
+        },
+
+        async downloadPdf() {
+            if (!this.clientId || this.pdfLoading) {
+                return;
+            }
+
+            this.pdfLoading = true;
+            this.clearClientErrors();
+
+            try {
+                await downloadClientPdf(this.clientId);
+            } catch (err) {
+                this.error = getHttpErrorMessage(err, 'No se pudo generar el PDF');
+            } finally {
+                this.pdfLoading = false;
             }
         },
 
