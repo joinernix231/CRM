@@ -1,35 +1,35 @@
 ﻿# Mini CRM
 
-Monolito **Laravel 9** + **Vue 3** (Composition API, Pinia) para gesti├│n de clientes y contactos. Prueba t├®cnica Full Stack ÔÇö dominio agencia/consultor├¡a.
+Monolito **Laravel 9** + **Vue 3** (Composition API, Pinia) para gestión de clientes y contactos. Prueba técnica Full Stack - dominio agencia/consultoría.
 
 ## Stack
 
-| Capa | Tecnolog├¡a |
+| Capa | Tecnología |
 |------|------------|
 | Backend | Laravel 9.x, PHP 8.2, MySQL 8 |
 | Auth | Laravel Sanctum (Bearer token) |
 | Frontend | Vue 3 (`<script setup>`), Pinia, Vite |
 | Arquitectura | Rutas web en Laravel; Vue montado en Blade (sin Vue Router ni Inertia) |
-| Validaci├│n API | Form Requests |
+| Validación API | Form Requests |
 | Persistencia | Repositorio (`prettus/l5-repository`) + criterios de consulta |
-| Opcionales | Docker, PHPUnit, exportaci├│n PDF (DomPDF), Laravel Telescope (debug local) |
+| Opcionales | Docker, PHPUnit, exportación PDF (DomPDF), Laravel Telescope (debug local) |
 
 ## Funcionalidades
 
-- **Autenticaci├│n:** login, logout y registro v├¡a API (`POST /api/register`). La UI usa el usuario de prueba creado por `UserSeeder`.
-- **Clientes:** CRUD, b├║squeda por texto y filtro por estado (`active`, `inactive`, `prospect`). Paginaci├│n en API.
+- **Autenticación:** login, logout y registro vía API (`POST /api/register`). La UI usa el usuario de prueba creado por `UserSeeder`.
+- **Clientes:** CRUD, búsqueda por texto y filtro por estado (`active`, `inactive`, `prospect`). Paginación en API.
 - **Contactos:** CRUD anidado por cliente desde el detalle del cliente.
 - **Reglas de negocio:**
   - Un contacto pertenece a un solo cliente; un cliente tiene muchos contactos.
   - Solo un contacto **primario** por cliente (al marcar otro como primario, el anterior se desmarca).
   - Cada cliente/contacto queda asociado al `user_id` del usuario autenticado (aislamiento multi-usuario).
-- **PDF:** en el detalle del cliente, bot├│n *Descargar PDF* con datos del cliente y tabla de contactos.
+- **PDF:** en el detalle del cliente, botón *Descargar PDF* con datos del cliente y tabla de contactos.
 
 ---
 
-## Inicio r├ípido (recomendado: Docker)
+## Inicio rápido (recomendado: Docker)
 
-Desde la **ra├¡z del repositorio**:
+Desde la **raíz del repositorio**:
 
 ```bash
 docker compose up -d --build
@@ -38,11 +38,11 @@ npm install
 npm run build
 ```
 
-Abre http://localhost:8000/login e inicia sesi├│n con el [usuario de prueba](#usuario-de-prueba-userseeder) (tabla siguiente).
+Abre http://localhost:8000/login e inicia sesión con el [usuario de prueba](#usuario-de-prueba-userseeder) (tabla siguiente).
 
 | Servicio | URL |
 |----------|-----|
-| Aplicaci├│n | http://localhost:8000 |
+| Aplicación | http://localhost:8000 |
 | Login | http://localhost:8000/login |
 | Clientes | http://localhost:8000/clients |
 | phpMyAdmin | http://localhost:8080 |
@@ -53,19 +53,19 @@ El contenedor `app`, en el primer arranque, copia `.env`, genera `APP_KEY`, inst
 
 ### Usuario de prueba (`UserSeeder`)
 
-El seeder `database/seeders/UserSeeder.php` deja un usuario listo para revisar la app sin registrarse manualmente. Las credenciales est├ín definidas como constantes en esa clase:
+El seeder `database/seeders/UserSeeder.php` deja un usuario listo para revisar la app sin registrarse manualmente:
 
 | Campo | Valor |
 |-------|--------|
 | Nombre | `Joiner Davila` |
 | Email | `Joiner@email.com` |
-| Contrase├▒a | `secret` |
+| Contraseña | `secret` |
 
-Orden de ejecuci├│n de seeders (`DatabaseSeeder`):
+Orden de ejecución de seeders (`DatabaseSeeder`):
 
-1. **UserSeeder** ÔÇö crea/actualiza el usuario demo (`updateOrCreate` por email).
-2. **ClientSeeder** ÔÇö 10 clientes de ejemplo para ese usuario.
-3. **ContactSeeder** ÔÇö contactos por cliente (uno marcado como primario).
+1. **UserSeeder** - crea o actualiza el usuario demo (`updateOrCreate` por email).
+2. **ClientSeeder** - 10 clientes de ejemplo para ese usuario.
+3. **ContactSeeder** - contactos por cliente (uno marcado como primario).
 
 Para repetir datos desde cero:
 
@@ -79,11 +79,11 @@ Sin Docker:
 php artisan migrate:fresh --seed
 ```
 
-Los tel├®fonos de clientes y contactos usan formato m├│vil Colombia: `3` + 9 d├¡gitos (`3#########`), generados en las factories.
+Los teléfonos de clientes y contactos usan formato móvil Colombia: `3` + 9 dígitos (`3#########`), generados en las factories.
 
 ### Frontend (necesario para ver la UI)
 
-Los assets compilados **no** est├ín en Git (`public/build` en `.gitignore`):
+Los assets compilados **no** están en Git (`public/build` en `.gitignore`):
 
 ```bash
 npm install
@@ -104,7 +104,7 @@ VITE_API_URL=http://localhost:8000/api
 |----------|-------------------|
 | Base de datos | `mini_crm` |
 | Usuario | `crm_user` |
-| Contrase├▒a | `crm_password` |
+| Contraseña | `crm_password` |
 | Root | `root` / `root` |
 
 ---
@@ -117,7 +117,7 @@ VITE_API_URL=http://localhost:8000/api
 
 ## Desarrollo local sin Docker
 
-1. `cp .env.example .env` ÔÇö ajusta `DB_HOST=127.0.0.1` si usas MySQL local.
+1. `cp .env.example .env` - ajusta `DB_HOST=127.0.0.1` si usas MySQL local.
 2. `composer install`
 3. `php artisan key:generate`
 4. `php artisan migrate:fresh --seed`
@@ -130,7 +130,7 @@ VITE_API_URL=http://localhost:8000/api
 docker compose exec app php artisan test
 ```
 
-Incluye auth, CRUD, aislamiento por usuario, contacto primario ├║nico y descarga PDF.
+Incluye auth, CRUD, aislamiento por usuario, contacto primario único y descarga PDF.
 
 ---
 
@@ -143,11 +143,11 @@ Authorization: Bearer {token}
 Accept: application/json
 ```
 
-| M├®todo | Ruta | Descripci├│n |
+| Método | Ruta | Descripción |
 |--------|------|-------------|
 | POST | `/api/login` | Login |
-| POST | `/api/register` | Registro (solo API; ver decisiones t├®cnicas) |
-| POST | `/api/logout` | Cerrar sesi├│n |
+| POST | `/api/register` | Registro (solo API; ver decisiones técnicas) |
+| POST | `/api/logout` | Cerrar sesión |
 | GET | `/api/user` | Perfil |
 | GET/POST | `/api/clients` | Listar / crear |
 | GET/PUT/DELETE | `/api/clients/{id}` | Ver / editar / borrar |
@@ -169,88 +169,88 @@ Query en listado de clientes: `search`, `status`, `page`, `per_page`.
 
 ---
 
-## Decisiones t├®cnicas relevantes
+## Decisiones técnicas relevantes
 
-Esta secci├│n responde al enunciado: *documentar decisiones que consideres relevantes*. Para cada punto: **qu├® problema hab├¡a**, **qu├® eleg├¡** y **por qu├®**.
+Esta sección responde al enunciado: *documentar decisiones que consideres relevantes*. Para cada punto: **qué problema había**, **qué elegí** y **por qué**.
 
 ### 1. Monolito Laravel + Vue en Blade (sin SPA)
 
 | | |
 |---|---|
 | **Contexto** | El enunciado exige monolito, Vite y prohibe Vue Router, Inertia y frontend separado. |
-| **Decisi├│n** | Varias entradas Vite (`app.js`, `clients.js`, `client.js`, `dashboard.js`) montan componentes Vue en vistas Blade; Laravel define todas las URLs en `routes/web.php`. |
-| **Por qu├®** | Cumple la arquitectura pedida, SEO/simple deploy y evita duplicar rutas entre Laravel y el front. Pinia comparte estado dentro de cada pantalla. |
+| **Decisión** | Varias entradas Vite (`app.js`, `clients.js`, `client.js`, `dashboard.js`) montan componentes Vue en vistas Blade; Laravel define todas las URLs en `routes/web.php`. |
+| **Por qué** | Cumple la arquitectura pedida, deploy simple y evita duplicar rutas entre Laravel y el front. Pinia comparte estado dentro de cada pantalla. |
 
 ### 2. API JSON + Sanctum (Bearer)
 
 | | |
 |---|---|
-| **Contexto** | Autenticaci├│n con Sanctum y rutas del CRM protegidas. |
-| **Decisi├│n** | Login devuelve `access_token`; el front lo guarda y lo env├¡a en `Authorization: Bearer`. Middleware `VerifyApiToken` valida el token y deja `user_id` en sesi├│n para el resto del request. |
-| **Por qu├®** | Separaci├│n clara API/UI, compatible con pruebas HTTP y con el patr├│n SPA-parcial sin convertir el proyecto en SPA completa. |
+| **Contexto** | Autenticación con Sanctum y rutas del CRM protegidas. |
+| **Decisión** | Login devuelve `access_token`; el front lo guarda y lo envía en `Authorization: Bearer`. Middleware `VerifyApiToken` valida el token y deja `user_id` en sesión para el resto del request. |
+| **Por qué** | Separación clara API/UI, compatible con pruebas HTTP y con un front parcial sin SPA completa. |
 
-### 3. Validaci├│n en Form Requests
+### 3. Validación en Form Requests
 
 | | |
 |---|---|
 | **Contexto** | El enunciado pide validaciones con Form Requests. |
-| **Decisi├│n** | Un request por acci├│n (`CreateClientAPIRequest`, `ShowClientAPIRequest`, etc.) y clase base `APIRequest` para respuestas de error uniformes (`success`, `message`, `data` por campo). |
-| **Por qu├®** | Controladores delgados, reglas reutilizables (p. ej. `clientIdRules`) y mensajes de validaci├│n consistentes para el front (`ValidationAlert`, `FormField`). |
+| **Decisión** | Un request por acción (`CreateClientAPIRequest`, `ShowClientAPIRequest`, etc.) y clase base `APIRequest` para respuestas de error uniformes (`success`, `message`, `data` por campo). |
+| **Por qué** | Controladores delgados, reglas reutilizables (p. ej. `clientIdRules`) y mensajes de validación consistentes para el front (`ValidationAlert`, `FormField`). |
 
 ### 4. Aislamiento por `user_id` (multi-usuario)
 
 | | |
 |---|---|
-| **Contexto** | ÔÇ£Cada registro asociado al usuario que lo cre├│ÔÇØ y solo usuarios autenticados. |
-| **Decisi├│n** | Columna `user_id` en `clients` y `contacts`; listados filtran por `session('user_id')`; regla `ObjectBelongsToModelRule` impide acceder a IDs de otro usuario (respuesta 400). |
-| **Por qu├®** | Implementa la regla de negocio sin depender solo del front; los tests verifican que un usuario no ve clientes ajenos. |
+| **Contexto** | Cada registro asociado al usuario que lo creó y solo usuarios autenticados. |
+| **Decisión** | Columna `user_id` en `clients` y `contacts`; listados filtran por `session('user_id')`; regla `ObjectBelongsToModelRule` impide acceder a IDs de otro usuario (respuesta 400). |
+| **Por qué** | Implementa la regla de negocio sin depender solo del front; los tests verifican que un usuario no ve clientes ajenos. |
 
 ### 5. Un solo contacto primario
 
 | | |
 |---|---|
 | **Contexto** | Solo puede existir un contacto primario por cliente. |
-| **Decisi├│n** | Al crear/actualizar con `is_primary = true`, `ContactRepository` desmarca los dem├ís del mismo `client_id`; el modelo refuerza la restricci├│n en eventos. |
-| **Por qu├®** | La regla vive en el dominio (no solo en UI); tests unitarios y de API cubren el caso. |
+| **Decisión** | Al crear o actualizar con `is_primary = true`, `ContactRepository` desmarca los demás del mismo `client_id`; el modelo refuerza la restricción en eventos. |
+| **Por qué** | La regla vive en el dominio (no solo en UI); tests unitarios y de API cubren el caso. |
 
 ### 6. Repositorio + criterios de consulta
 
 | | |
 |---|---|
-| **Contexto** | Listados con b├║squeda, filtro por estado, relaciones y paginaci├│n. |
-| **Decisi├│n** | `prettus/l5-repository` con criterios (`WhereFieldCriteria`, `FiltersCriteria`, `WithRelationshipsCriteria`, ÔÇª). |
-| **Por qu├®** | Evita repetir scopes en cada m├®todo del controlador y facilita combinar filtros (`search` + `status`) desde query string. |
+| **Contexto** | Listados con búsqueda, filtro por estado, relaciones y paginación. |
+| **Decisión** | `prettus/l5-repository` con criterios (`WhereFieldCriteria`, `FiltersCriteria`, `WithRelationshipsCriteria`, etc.). |
+| **Por qué** | Evita repetir scopes en cada método del controlador y facilita combinar filtros (`search` + `status`) desde query string. |
 
 ### 7. Registro en API; demo con `UserSeeder`
 
 | | |
 |---|---|
-| **Contexto** | Se pide registro, login y logout; la revisi├│n debe ser r├ípida. |
-| **Decisi├│n** | `POST /api/register` implementado; pantalla de login usa el usuario del seeder (`Joiner@email.com` / `secret`). |
-| **Por qu├®** | Cumple el requisito de registro sin duplicar flujos en Vue; el evaluador entra en un paso con datos ya cargados. |
+| **Contexto** | Se pide registro, login y logout; la revisión debe ser rápida. |
+| **Decisión** | `POST /api/register` implementado; pantalla de login usa el usuario del seeder (`Joiner@email.com` / `secret`). |
+| **Por qué** | Cumple el requisito de registro sin duplicar flujos en Vue; el evaluador entra en un paso con datos ya cargados. |
 
 ### 8. PDF con DomPDF (mejora opcional)
 
 | | |
 |---|---|
 | **Contexto** | Mejora opcional: exportar PDF. |
-| **Decisi├│n** | `GET /api/clients/{id}/pdf`, plantilla Blade `resources/views/pdf/client-detail.blade.php`, descarga desde el detalle del cliente. |
-| **Por qu├®** | Reutiliza stack Laravel (Blade + paquete maduro), misma autorizaci├│n que el resto de la API. |
+| **Decisión** | `GET /api/clients/{id}/pdf`, plantilla Blade `resources/views/pdf/client-detail.blade.php`, descarga desde el detalle del cliente. |
+| **Por qué** | Reutiliza stack Laravel (Blade + paquete maduro), misma autorización que el resto de la API. |
 
 ### 9. Assets front fuera de Git
 
 | | |
 |---|---|
 | **Contexto** | Entregar repo clonable. |
-| **Decisi├│n** | `public/build` en `.gitignore`; el README exige `npm run build` tras clonar. |
-| **Por qu├®** | Evita binarios enormes en Git; es el flujo est├índar con Vite en Laravel. |
+| **Decisión** | `public/build` en `.gitignore`; el README exige `npm run build` tras clonar. |
+| **Por qué** | Evita binarios enormes en Git; es el flujo estándar con Vite en Laravel. |
 
 ### 10. Docker + tests automatizados (mejoras opcionales)
 
 | | |
 |---|---|
-| **Decisi├│n** | `docker-compose` (app, MySQL, phpMyAdmin); PHPUnit contra MySQL en Docker; Telescope opcional en local. |
-| **Por qu├®** | Quien revisa levanta el entorno sin instalar PHP/MySQL en el host si no lo desea. |
+| **Decisión** | `docker-compose` (app, MySQL, phpMyAdmin); PHPUnit contra MySQL en Docker; Telescope opcional en local. |
+| **Por qué** | Quien revisa levanta el entorno sin instalar PHP/MySQL en el host si no lo desea. |
 
 ---
 
@@ -258,8 +258,8 @@ Esta secci├│n responde al enunciado: *documentar decisiones que consideres r
 
 - Cada usuario ve **solo** sus clientes y contactos (CRM por consultor/vendedor).
 - Estados de cliente: `active`, `inactive`, `prospect`.
-- Tel├®fonos de ejemplo en formato Colombia (`3` + 9 d├¡gitos).
-- Paginaci├│n en API; la UI puede solicitar `per_page` alto para mostrar m├ís filas en demo.
+- Teléfonos de ejemplo en formato Colombia (`3` + 9 dígitos).
+- Paginación en API; la UI puede solicitar `per_page` alto para mostrar más filas en demo.
 - Telescope solo para desarrollo local, no requerido para usar el CRM.
 
 ---
@@ -277,7 +277,7 @@ tests/Feature/Api/
 docker-compose.yml
 ```
 
-## Comandos ├║tiles
+## Comandos útiles
 
 ```bash
 docker compose logs -f app
@@ -289,8 +289,8 @@ docker compose down
 ## Notas
 
 - No versionar `.env`; usar `.env.example`.
-- Carpeta local `mini-crm/` (si existe) es un resto de una estructura antigua; el proyecto est├í en la ra├¡z del repo y esa carpeta est├í en `.gitignore`.
+- Carpeta local `mini-crm/` (si existe) es un resto de una estructura antigua; el proyecto está en la raíz del repo y esa carpeta está en `.gitignore`.
 
 ---
 
-Prueba t├®cnica ÔÇö Desarrollador Full Stack (Laravel + Vue).
+Prueba técnica - Desarrollador Full Stack (Laravel + Vue).
