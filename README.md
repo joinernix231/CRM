@@ -68,7 +68,3 @@ El `docker-compose.yml` también inyecta las variables de BD en el servicio `app
 - `POST /api/register`
 - `GET /api/clients` (requiere sesión/token)
 - Telescope (debug): http://localhost:8000/telescope
-
-## Nota sobre el compose anterior
-
-Si antes usabas `docker compose` desde la carpeta padre (`Prueba Tecnica`), ahora debes ejecutarlo desde **`mini-crm`**, donde vive la configuración del CRM.
