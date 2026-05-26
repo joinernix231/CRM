@@ -28,9 +28,7 @@ const http = axios.create({
         Accept: 'application/json',
         'Content-Type': 'application/json',
     },
-    withCredentials: true,
-    xsrfCookieName: 'XSRF-TOKEN',
-    xsrfHeaderName: 'X-XSRF-TOKEN',
+    withCredentials: false,
 });
 
 http.interceptors.response.use(
