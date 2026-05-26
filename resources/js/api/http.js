@@ -6,14 +6,24 @@ import {
     redirectToLogin,
 } from '../utils/session';
 
-export function appBaseUrl() {
-    const apiUrl = import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api';
+export function resolveApiBaseUrl() {
+    if (import.meta.env.DEV) {
+        return import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api';
+    }
 
-    return String(apiUrl).replace(/\/api\/?$/, '');
+    if (typeof window !== 'undefined') {
+        return `${window.location.origin}/api`;
+    }
+
+    return import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api';
+}
+
+export function appBaseUrl() {
+    return String(resolveApiBaseUrl()).replace(/\/api\/?$/, '');
 }
 
 const http = axios.create({
-    baseURL: import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api',
+    baseURL: resolveApiBaseUrl(),
     headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
